@@ -13,9 +13,6 @@ Role Variables
 
 Available variables are listed below, along with default values (see `defaults/main.yml`):
 
-    aws_efs_paths:
-    - { path: "/some/path", owner: "root", group: "root", mode: "0644", region: "eu-west-1", filesystem_id: "fs-someid", state: "mounted", opts: "nfsvers=4.1"}
-    - { path: "/some/other/path", owner: "root", group: "root", mode: "0755", region: "eu-west-1", filesystem_id: "fs-someotherid", state: "mounted", opts: "nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2"}
 
 Dependencies
 ------------
@@ -29,7 +26,24 @@ Including an example of how to use your role (for instance, with variables passe
 
     - hosts: servers
       roles:
-         - { role: kaihei777.efs-lightsail, x: 42 }
+      - {
+          role: kaihei777.ansible_role_efs_lightsail,
+          aws_efs_paths:
+            [
+              {
+                path: "/mnt/efs",
+                owner: "root",
+                group: "root",
+                mode: "0644",
+                region: "ap-northeast-1",
+                filesystem_id: "fs-xxxxx",
+                mount_target_ip: "172.31.xx.xx",
+                state: "mounted",
+                opts: "nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2",
+                mount_type: "vpc-peering",
+              },
+            ],
+        }
 
 License
 -------
