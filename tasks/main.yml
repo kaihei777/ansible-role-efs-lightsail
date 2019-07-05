@@ -25,13 +25,17 @@
     state: "{{ item.state | default('mounted') }}"
   with_items: "{{ aws_efs_paths }}"
   when: mount_type == 'vpc-local'
+  tags:
+    - efs
 
 - name: Mount paths vpc-peering
   mount:
     name: "{{ item.path }}"
-    src: "{{ item.mount_target_ip }}.:/"
+    src: "{{ item.mount_target_ip }}:/"
     fstype: nfs4
     opts: "{{ item.opts | default('nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2') }}"
     state: "{{ item.state | default('mounted') }}"
   with_items: "{{ aws_efs_paths }}"
   when: mount_type == 'vpc-peering'
+  tags:
+    - efs

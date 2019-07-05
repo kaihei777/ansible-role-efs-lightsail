@@ -3,6 +3,11 @@ ansible-role-efs-lightsail
 
 Mount Amazon EFS file systems to VPC Peering Lightsail instances.
 
+Galaxy link
+------------
+
+https://galaxy.ansible.com/kaihei777/ansible_role_efs_lightsail/
+
 Requirements
 ------------
 
