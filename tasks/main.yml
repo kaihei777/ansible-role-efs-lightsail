@@ -6,8 +6,6 @@
     name: nfs-utils
     state: present
   when: ansible_os_family == 'RedHat'
-  tags:
-    - efs
 
 - name: Create directories for the mounts
   file:
@@ -17,8 +15,6 @@
     owner: "{{ item.owner | default('root') }}"
     group: "{{ item.group | default('root') }}"
   with_items: "{{ aws_efs_paths }}"
-  tags:
-    - efs
 
 - name: Mount paths vpc-local
   mount:
@@ -29,8 +25,6 @@
     state: "{{ item.state | default('mounted') }}"
   with_items: "{{ aws_efs_paths }}"
   when: mount_type == 'vpc-local'
-  tags:
-    - efs
 
 - name: Mount paths vpc-peering
   mount:
@@ -41,5 +35,3 @@
     state: "{{ item.state | default('mounted') }}"
   with_items: "{{ aws_efs_paths }}"
   when: mount_type == 'vpc-peering'
-  tags:
-    - efs
